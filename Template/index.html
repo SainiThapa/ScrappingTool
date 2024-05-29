@@ -1,0 +1,24 @@
+<h1>This is the homepage</h1>
+{%if user.is_authenticated%}
+Welcome {{request.user}}
+<br>
+<p><a href="/tool/customize">Scrap tool here</a></p>
+
+<p><a href="/logout">Logout</a></p>
+{%if user.is_superuser%}
+<p><a href="/tool/add_webpage">Add webportal</a></p>
+<p><a href="/tool/webpage_list">View webportals</a></p>
+
+
+{%endif%}
+{%else%}
+<a href="login">Sign in</a>
+{%endif%}
+
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}

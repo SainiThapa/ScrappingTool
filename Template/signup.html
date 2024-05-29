@@ -1,0 +1,15 @@
+<h1>Signup for new user</h1>
+<form method="POST">
+    {%csrf_token%}
+    <label for="username">Enter username</label>
+    <input type="text" name="username"> <br>
+    <label for="email">Enter Email Address</label>
+    <input type="email" name="email"><br>
+    <label for="password1">Enter password</label>
+    <input type="password" name="password1"><br>
+    <label for="password2">Confirm password</label>
+    <input type="password" name="password2"><br>
+    <label for="phone">Phone number</label>
+    <input type="text" name="phone"><br>
+    <input type="submit">
+</form>
