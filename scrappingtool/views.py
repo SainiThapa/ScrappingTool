@@ -4,6 +4,7 @@ from scrappingtool.models import Webportal
 from .validate import website_data
 from django.contrib.auth.decorators import user_passes_test
 from .forms import WebportalForm
+from .scrapping import main
 # Create your views here.
 
 def customize(request):
@@ -16,9 +17,10 @@ def customize(request):
 def search(request):
     if request.user.is_authenticated:
         if request.method=="POST":
-            websites=website_data(request)
+            # websites=website_data(request)
             search_query = request.POST.get("search")
-            return render(request, "search_result.html", {'websites':websites,'search_query': search_query})
+            newsheadlines=main(search_query)
+            return render(request, "search_result.html", {'newsheadlines':newsheadlines,'search_query': search_query})
         return redirect("customize")
     return render(request,"404.html")    
 
