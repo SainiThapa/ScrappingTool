@@ -1,2 +1,12 @@
 <h2>Search query : {{search_query}} </h2>
-{{newsheadlines}}
+
+{%for newsheadline in newsheadlines%}
+
+<p>
+    {{newsheadline.news_title}}  <br>
+    <a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a><br>
+    {{newsheadline.news_upload_date}}  <br>
+
+</p>
+
+{%endfor%}

@@ -1,12 +1,7 @@
-<h1>Page to customize your website preferences</h1>
+<h1>Search a query to get the relevant news headlines</h1>
 
 <form method="post" action="/tool/searchresults">
     {%csrf_token%}
-    <label for="website">Choose your websites: </label><br>
-    {%for webportal in webportals%}
-    <input type="checkbox" name="website" value="{{webportal.page_url}}">{{webportal.page_title}}<br>
-    {%endfor%}
-    <br>
    <label for="search">Search here</label><br>
     <input type="text" name="search" placeholder="Search your query here">
     <input type="submit" value="Search">

@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 
-from scrappingtool.models import Webportal
+from scrappingtool.models import Newsheadline, Webportal
 from .validate import website_data
 from django.contrib.auth.decorators import user_passes_test
 from .forms import WebportalForm
@@ -19,7 +19,9 @@ def search(request):
         if request.method=="POST":
             # websites=website_data(request)
             search_query = request.POST.get("search")
-            newsheadlines=main(search_query)
+            search_news=main(search_query)
+            newsheadlines=Newsheadline.objects.all()
+
             return render(request, "search_result.html", {'newsheadlines':newsheadlines,'search_query': search_query})
         return redirect("customize")
     return render(request,"404.html")    

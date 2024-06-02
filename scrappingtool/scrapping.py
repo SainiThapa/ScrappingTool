@@ -3,6 +3,8 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+from scrappingtool.models import Newsheadline, Webportal
+
 # Function to preprocess Nepali text
 def preprocess_nepali_text(text):
     # Remove non-Nepali characters
@@ -77,7 +79,12 @@ def scrape_news():
     ]
 
     for website in websites:
-        for j in range(1, 11):
+        try:
+            webportal_instance = Webportal.objects.get(page_title=website['name'])
+        except Webportal.DoesNotExist:
+            print(f"Webportal instance for {website['name']} does not exist.")
+            continue
+        for j in range(1, 3):
             try:
                 webpage = requests.get(website['url'].format(j), headers=website['headers'])
                 webpage.raise_for_status()
@@ -95,8 +102,14 @@ def scrape_news():
                 if news_title and post_hour:
                     title_text = news_title.text.strip()
                     post_hour_text = post_hour.text.strip()
-                    final_data.append({'title': title_text, 'post_hour': post_hour_text})
-
+                    final_data.append({'title': title_text, 'post_hour': post_hour_text})                    
+                    
+                    if Newsheadline.objects.filter(news_source=webportal_instance,news_title=title_text,news_upload_date=post_hour).first():
+                        print("News already exists")
+                        pass
+                    else:
+                        newsheadline=Newsheadline.objects.create(news_source=webportal_instance,news_title=title_text, news_upload_date=post_hour_text)
+                        newsheadline.save()
     final_df = pd.DataFrame(final_data)
     final_df['title_cleaned'] = final_df['title'].apply(preprocess_nepali_text)
     final_df['title_tokens'] = final_df['title_cleaned'].str.split()
