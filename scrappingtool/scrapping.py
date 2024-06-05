@@ -77,11 +77,13 @@ def scrape_news():
                     post_hour_text = post_hour.text.strip()
                     final_data.append({'title': title_text, 'post_hour': post_hour_text})                    
                     try:
-                        if Newsheadline.objects.filter(news_source=webportal_instance,news_title=title_text,news_upload_date=post_hour).exists():
+                        if Newsheadline.objects.filter(news_source=webportal_instance,news_title=title_text,
+                                                       news_upload_date=post_hour).exists():
                             print("News already exists")
                             break
                     except:
-                        newsheadline=Newsheadline.objects.create(news_source=webportal_instance,news_title=title_text, news_upload_date=post_hour_text)
+                        newsheadline=Newsheadline.objects.create(news_source=webportal_instance,news_title=title_text, 
+                                                                 news_upload_date=post_hour_text)
                         newsheadline.save()
     final_df = pd.DataFrame(final_data)
     final_df['title_cleaned'] = final_df['title'].apply(preprocess_nepali_text)
