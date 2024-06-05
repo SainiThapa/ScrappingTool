@@ -9,7 +9,7 @@ class Webportal(models.Model):
     page_url=models.URLField(max_length=200)
 
     def __str__(self):
-        return self.page_title
+        return f"{self.page_title} - {self.page_url}"
     
 
 class Newsheadline(models.Model):

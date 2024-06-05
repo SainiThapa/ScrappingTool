@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
+import pandas as pd
 
 from scrappingtool.models import Newsheadline, Webportal
 from .validate import website_data
 from django.contrib.auth.decorators import user_passes_test
 from .forms import WebportalForm
-from .scrapping import main
+from .scrapping import scrape_news, search_and_display, search_news
 # Create your views here.
 
 def customize(request):
@@ -19,10 +20,9 @@ def search(request):
         if request.method=="POST":
             # websites=website_data(request)
             search_query = request.POST.get("search")
-            search_news=main(search_query)
-            newsheadlines=Newsheadline.objects.all()
-
-            return render(request, "search_result.html", {'newsheadlines':newsheadlines,'search_query': search_query})
+            
+            matching_newsheadlines = search_and_display(search_query)
+            return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query})
         return redirect("customize")
     return render(request,"404.html")    
 

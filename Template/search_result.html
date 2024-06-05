@@ -1,12 +1,25 @@
+<style>
+    table,th,td{
+        border: 1px solid black;
+        padding: 2px;
+    }
+</style>
+
 <h2>Search query : {{search_query}} </h2>
 
-{%for newsheadline in newsheadlines%}
+<table>
 
-<p>
-    {{newsheadline.news_title}}  <br>
-    <a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a><br>
-    {{newsheadline.news_upload_date}}  <br>
-
-</p>
-
-{%endfor%}
+    <th><h3>S.No.</h3></th>
+    <th><h1>News Title</h1></th>
+    <th><h1>Url source</h1></th>
+    <th><h1>Upload Date</h1></th>
+    {%for newsheadline in newsheadlines%}
+<tr>
+    <td>{{ newsheadline.id }}</td>
+    <td>{{newsheadline.news_title}}</td>
+    <td><a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a></td>
+    <td>{{newsheadline.news_upload_date}}</td>
+</tr>   
+    {%endfor%}
+    
+</table>
