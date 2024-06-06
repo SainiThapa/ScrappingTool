@@ -1,4 +1,28 @@
-{%for webportal in webportals%}
-<p>{{webportal.page_title}} - {{webportal.page_url}}</p>
-<hr>
-{%endfor%}
+<style>
+    table,th,td{
+        border: 1px solid black;
+    }
+    td{
+        padding: 3px 10px;
+    }
+
+</style>
+<h1>News Webportal list</h1>
+<table>
+    <th>Page ID</th>
+    <th>Webportal</th>
+    <th>Webpage source URL</th>
+    <th>Action</th>
+
+    {%for webportal in webportals%}
+    <tr>
+        <td>{{webportal.page_id}}</td>
+        <td>{{webportal.page_title}}</td>
+        <td><a href="{{webportal.page_url}}">{{webportal.page_url}}</a></td>
+        <form method="post">
+            <td><a href="/tool/delete/{{webportal.page_id}}">Delete</a></td>
+        </form>
+
+    </tr>
+    {%endfor%}
+</table>

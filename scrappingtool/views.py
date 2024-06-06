@@ -28,6 +28,7 @@ def search(request):
 
 
 
+
 def superuser_required(user):
     return user.is_superuser
 
@@ -35,6 +36,14 @@ def superuser_required(user):
 def webpage_list(request):
     webportals=Webportal.objects.all()
     return render(request,"webpage_list.html", {'webportals':webportals})
+
+def delete(request,page_id):
+    id=page_id.replace("-","")
+    print(id)
+    webportal=Webportal.objects.filter(page_id=id).first()
+    print(webportal)
+    webportal.delete()
+    return redirect('/tool/webpage_list')
 
 @user_passes_test(superuser_required)
 def add_webpage(request):
