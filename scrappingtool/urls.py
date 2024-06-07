@@ -8,4 +8,5 @@ urlpatterns=[
     path('webpage_list',views.webpage_list,name="webpage_list"),
     path('add_webpage',views.add_webpage,name="add_webpage"),
     path('search_database',views.search_database, name="search_database"),
+    path('news_datahouse',views.datahouse,name="datahouse"),
 ]

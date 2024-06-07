@@ -15,20 +15,19 @@ def customize(request):
         return render(request,"customize.html",{'webportals':webportals})
     return render(request,"404.html")
 
-def search(request):
-    if request.user.is_authenticated:
-        if request.method=="POST":
-            # websites=website_data(request)
-            search_query = request.POST.get("search")
-            
-            matching_newsheadlines = search_and_display(search_query)
-            return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query})
-        return redirect("customize")
-    return render(request,"404.html")    
-
-
 def user_required(user):
     return user.is_active
+
+@user_passes_test(user_required)
+def search(request):
+    if request.method=="POST":
+        # websites=website_data(request)
+        search_query = request.POST.get("search")
+        matching_newsheadlines = search_and_display(search_query)
+        return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query})
+    return redirect("customize")
+
+
 
 @user_passes_test(user_required)
 def search_database(request):
@@ -67,3 +66,8 @@ def add_webpage(request):
     else:
         form=WebportalForm()
     return render(request, "add_webportal.html",{'form':form})
+
+@user_passes_test(superuser_required)
+def datahouse(request):
+    newsheadlines=Newsheadline.objects.all()
+    return render(request,"news_list.html",{'newsheadlines':newsheadlines})

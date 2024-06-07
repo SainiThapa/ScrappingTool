@@ -80,11 +80,12 @@ def scrape_news():
                         if Newsheadline.objects.filter(news_source=webportal_instance,news_title=title_text,
                                                        news_upload_date=post_hour).exists():
                             print("News already exists")
-                            break
-                    except:
-                        newsheadline=Newsheadline.objects.create(news_source=webportal_instance,news_title=title_text, 
+                        else:
+                            newsheadline=Newsheadline.objects.create(news_source=webportal_instance,news_title=title_text, 
                                                                  news_upload_date=post_hour_text)
-                        newsheadline.save()
+                            newsheadline.save()
+                    except:
+                        raise InterruptedError  
     final_df = pd.DataFrame(final_data)
     final_df['title_cleaned'] = final_df['title'].apply(preprocess_nepali_text)
     final_df['title_tokens'] = final_df['title_cleaned'].str.split()

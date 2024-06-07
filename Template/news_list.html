@@ -1,0 +1,25 @@
+
+<style>
+table{
+    border-collapse: collapse;
+}
+th,td{
+    border:2px solid black;
+    padding: 3px;
+}
+</style>
+
+<table>
+    <th>ID</th>
+    <th>news_title</th>
+    <th>news_source</th>
+    <th>Uploaded Date</th>
+    {%for newsheadline in newsheadlines%}
+    <tr>
+        <td>{{newsheadline.id}}</td>
+        <td>{{newsheadline.news_title}}</td>
+        <td>{{newsheadline.news_source.page_url}}</td>
+        <td>{{newsheadline.news_upload_date}}</td>
+    </tr>
+    {%endfor%}
+</table>
