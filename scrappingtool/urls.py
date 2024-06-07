@@ -7,4 +7,5 @@ urlpatterns=[
     path('delete/<page_id>',views.delete,name="delete"),
     path('webpage_list',views.webpage_list,name="webpage_list"),
     path('add_webpage',views.add_webpage,name="add_webpage"),
+    path('search_database',views.search_database, name="search_database"),
 ]

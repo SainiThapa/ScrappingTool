@@ -27,6 +27,18 @@ def search(request):
     return render(request,"404.html")    
 
 
+def user_required(user):
+    return user.is_active
+
+@user_passes_test(user_required)
+def search_database(request):
+    if request.method=="POST":
+        search_query=request.POST.get("search_query")
+        newsheadlines=Newsheadline.objects.all()
+        matching_newsheadlines=search_news(newsheadlines,search_query)
+        return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query})
+    return redirect("customize")
+
 
 
 def superuser_required(user):

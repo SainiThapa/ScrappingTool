@@ -1,8 +1,18 @@
-<h1>Search a query to get the relevant news headlines</h1>
+<h1>Search to scrape relevant news headlines</h1>
 
 <form method="post" action="/tool/searchresults">
     {%csrf_token%}
    <label for="search">Search here</label><br>
     <input type="text" name="search" placeholder="Search your query here">
     <input type="submit" value="Search">
+</form>
+<br>
+
+<h1>Search from scrapped data</h1>
+
+<form method="post" action="/tool/search_database">
+{%csrf_token%}
+<label for="search_query">Search for existing news: </label><br>
+<input type="text" name="search_query" placeholder="Search in the database">
+<input type="submit" value="Search">
 </form>
