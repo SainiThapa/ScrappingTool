@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import Newsheadline, Webportal
 
 # Register your models here.

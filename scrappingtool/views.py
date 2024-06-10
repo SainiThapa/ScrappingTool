@@ -1,11 +1,17 @@
-from django.shortcuts import redirect, render
-import pandas as pd
+import os
 
-from scrappingtool.models import Newsheadline, Webportal
-from .validate import website_data
+import pandas as pd
+from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import redirect, render
+
+from scrappingtool.db_csv import export_to_csv
+from scrappingtool.models import Newsheadline, Webportal
+
 from .forms import WebportalForm
 from .scrapping import scrape_news, search_and_display, search_news
+from .validate import website_data
+
 # Create your views here.
 
 def customize(request):

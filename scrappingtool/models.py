@@ -1,4 +1,5 @@
 import uuid
+
 from django.db import models
 
 # Create your models here.
@@ -14,7 +15,6 @@ class Webportal(models.Model):
 
 class Newsheadline(models.Model):
     news_source=models.ForeignKey(Webportal, on_delete=models.CASCADE)
-    news_id=models.UUIDField(default=uuid.uuid4)
     news_title=models.CharField(max_length=512)
     news_upload_date=models.TextField()
 

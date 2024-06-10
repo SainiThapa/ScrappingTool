@@ -1,6 +1,8 @@
 from functools import wraps
-from django.shortcuts import redirect
+
 from django.contrib import messages
+from django.shortcuts import redirect
+
 
 def unauthenticated_user(view_func):
     @wraps(view_func)

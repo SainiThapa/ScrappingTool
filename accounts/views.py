@@ -1,7 +1,11 @@
-from django.contrib.auth.models import auth, User
+from django.contrib.auth.models import User
+from django.contrib import auth
 from django.shortcuts import redirect, render
+
 from accounts.models import BaseUser, SuperUser
+
 from .decorators import unauthenticated_user
+
 # from accounts.users import CreateUser
 
 # Create your views here.
@@ -28,12 +32,13 @@ def signup(request):
             print("Error")
     return render(request,'signup.html')
 
-@unauthenticated_user
+# @unauthenticated_user
 def login(request):
+    auth.logout(request)
     if request.method=='POST':
         email=request.POST.get("email")
         password=request.POST.get("password")
-        user=User.objects.filter(email=email,password=password).first()
+        user=auth.authenticate(email=email,password=password)
         if user is not None:
             auth.login(request,user)
             return redirect("/")

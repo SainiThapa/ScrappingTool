@@ -1,5 +1,7 @@
 from django import forms
-from .models import Webportal, Newsheadline
+
+from .models import Newsheadline, Webportal
+
 
 class WebportalForm(forms.ModelForm):
     class Meta:

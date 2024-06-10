@@ -1,5 +1,5 @@
 <style>
-    .tab-space{
+    .tab-space {
         padding-left: 2em;
     }
 </style>
@@ -8,11 +8,13 @@
 Welcome {{request.user}}
 <br>
 <p><a href="/tool/customize">Scrap tool here</a>
-<span class="tab-space">
-<a href="/logout">Logout</a></span></p>
+    <span class="tab-space">
+        <a href="/logout">Logout</a></span>
+</p>
 {%if user.is_superuser%}
 <p><span><a href="/tool/add_webpage">Add webportal</a></span>
-<span><a href="/tool/webpage_list">View webportals</a></span></p>
+    <span><a href="/tool/webpage_list">View webportals</a></span>
+</p>
 <p><a href="/tool/news_datahouse">View Scrapped News Database</a></p>
 
 {%endif%}
@@ -23,7 +25,7 @@ Welcome {{request.user}}
 {% if messages %}
 <ul>
     {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
 </ul>
 {% endif %}

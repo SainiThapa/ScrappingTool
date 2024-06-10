@@ -1,9 +1,11 @@
 import re
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-from scrappingtool.models import Newsheadline, Webportal
+from .models import Newsheadline, Webportal
+
 
 # Function to preprocess Nepali text
 def preprocess_nepali_text(text):
@@ -56,15 +58,16 @@ def scrape_news():
             try:
                 webpage = requests.get(website['url'].format(j), headers=website['headers'])
                 webpage.raise_for_status()
-                try:
-                    webportal_instance = Webportal.objects.get(page_title=website['name'],page_url=website['url'].format(j))
-                except Webportal.DoesNotExist:
-                    webportal_instance = Webportal.objects.create(page_title=website['name'], page_url=website['url'].format(j))
+                webportal_exists, created = Webportal.objects.get_or_create(page_title=website['name'], page_url=website['url'].format(j))
+
+                if created:
                     print(f"Created new web portal instance for {website['name']}")
+                webportal_instance = Webportal.objects.get(page_title=website['name'],page_url=website['url'].format(j))
+                
             except requests.exceptions.RequestException as e:
                 print(f"Failed to retrieve data from {website['name']} page {j}. Error: {e}")
                 continue
-
+            
             soup = BeautifulSoup(webpage.content, 'html.parser')
             news_data = soup.find_all('div', class_=website['news_block_class'])
 
@@ -77,16 +80,19 @@ def scrape_news():
                     post_hour_text = post_hour.text.strip()
                     final_data.append({'title': title_text, 'post_hour': post_hour_text})                    
                     try:
-                        if Newsheadline.objects.filter(news_source=webportal_instance,news_title=title_text,
-                                                       news_upload_date=post_hour).exists():
-                            print("News already exists")
+                        newsheadline, created=Newsheadline.objects.get_or_create(
+                            news_title=title_text,  
+                            news_source=webportal_instance,
+                            news_upload_date=post_hour_text)
+                        
+                        if created:
+                            print(f"News Created : {title_text}")
                         else:
-                            newsheadline=Newsheadline.objects.create(news_source=webportal_instance,news_title=title_text, 
-                                                                 news_upload_date=post_hour_text)
-                            newsheadline.save()
-                    except:
-                        raise InterruptedError  
-    final_df = pd.DataFrame(final_data)
+                            print(f"News already exists : {title_text}")
+
+                    except Exception as e:
+                        print(f"An error occured : {e}")
+    final_df = pd.DataFrame(final_data) 
     final_df['title_cleaned'] = final_df['title'].apply(preprocess_nepali_text)
     final_df['title_tokens'] = final_df['title_cleaned'].str.split()
     
@@ -113,4 +119,4 @@ def search_and_display(searchquery):
     
     except Exception as e:
         print(f"An error occurred during data processing: {e}")
-        return 0
+        return Newsheadline.objects.none()
