@@ -18,7 +18,7 @@ th,td{
     <tr>
         <td>{{newsheadline.id}}</td>
         <td>{{newsheadline.news_title}}</td>
-        <td>{{newsheadline.news_source.page_url}}</td>
+        <td><a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a></td>
         <td>{{newsheadline.news_upload_date}}</td>
     </tr>
     {%endfor%}

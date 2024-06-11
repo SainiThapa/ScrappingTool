@@ -26,14 +26,14 @@ def scrape_news():
 
     # Define websites to scrape
     websites = [
-        # {
-        #     'name': 'Online Khabar',
-        #     'url': 'https://www.onlinekhabar.com/content/news/rastiya/page/{}',
-        #     'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
-        #     'news_block_class': 'span-4',
-        #     'title_class': 'ok-news-title-txt',
-        #     'post_hour_class': 'ok-news-post-hour'
-        # },
+        {
+            'name': 'Online Khabar',
+            'url': 'https://www.onlinekhabar.com/content/news/rastiya/page/{}',
+            'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+            'news_block_class': 'span-4',
+            'title_class': 'ok-news-title-txt',
+            'post_hour_class': 'ok-news-post-hour'
+        },
         {
             'name': 'Setopati',
             'url': 'https://www.setopati.com/exclusive?page={}',
@@ -42,13 +42,13 @@ def scrape_news():
             'title_class': 'main-title',
             'post_hour_class': 'time-stamp'
         },
-        {
-            'name': 'Manthali Nagarpalika',
-            'url': 'https://manthalimun.gov.np/ne/node?page={}',
+         {
+            'name': 'Nagrain Municipality',
+            'url': 'https://www.nagrainmun.gov.np/news-notices/?page={}',
             'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
-            'news_block_class': 'region',
-            'title_class': 'views-field-title',
-            'post_hour_class': 'field-content'
+            'news_block_class': 'node node-article node-teaser clearfix',
+            'title_class': '',
+            'post_hour_class': ''
         }
     ]
 
@@ -74,9 +74,24 @@ def scrape_news():
             news_data = soup.find_all('div', class_=website['news_block_class'])
 
             for i in news_data:
-                news_title = i.find('h2', class_=website['title_class'])
-                post_hour = i.find('div', class_=website['post_hour_class'])
-
+                try:
+                    news_title = i.find('h2', class_=website['title_class'])
+                    if news_title is None:
+                        raise ValueError("Title not found in h2")
+                except:
+                    try:
+                        news_title = i.find('span', class_=website['title_class'])
+                        if news_title is None:
+                            raise ValueError("Title not found in span")
+                    except:
+                        news_title = i.find('div', class_=website['title_class'])
+                try:
+                    post_hour = i.find('div', class_=website['post_hour_class'])
+                    if post_hour is None:
+                        raise ValueError("POST Hour not found in div")
+                except:
+                        post_hour = i.find('span', class_=website['post_hour_class'])
+                        
                 if news_title and post_hour:
                     title_text = news_title.text.strip()
                     post_hour_text = post_hour.text.strip()
