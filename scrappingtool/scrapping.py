@@ -26,14 +26,14 @@ def scrape_news():
 
     # Define websites to scrape
     websites = [
-        {
-            'name': 'Online Khabar',
-            'url': 'https://www.onlinekhabar.com/content/news/rastiya/page/{}',
-            'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
-            'news_block_class': 'span-4',
-            'title_class': 'ok-news-title-txt',
-            'post_hour_class': 'ok-news-post-hour'
-        },
+        # {
+        #     'name': 'Online Khabar',
+        #     'url': 'https://www.onlinekhabar.com/content/news/rastiya/page/{}',
+        #     'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+        #     'news_block_class': 'span-4',
+        #     'title_class': 'ok-news-title-txt',
+        #     'post_hour_class': 'ok-news-post-hour'
+        # },
         {
             'name': 'Setopati',
             'url': 'https://www.setopati.com/exclusive?page={}',
@@ -67,8 +67,10 @@ def scrape_news():
             except requests.exceptions.RequestException as e:
                 print(f"Failed to retrieve data from {website['name']} page {j}. Error: {e}")
                 continue
-            
-            soup = BeautifulSoup(webpage.content, 'html.parser')
+            try:
+                soup = BeautifulSoup(webpage.content, 'html.parser')
+            except:
+                soup=BeautifulSoup(webpage.content,'lxml')
             news_data = soup.find_all('div', class_=website['news_block_class'])
 
             for i in news_data:
