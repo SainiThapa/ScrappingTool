@@ -1,15 +1,31 @@
-<h1>Signup for new user</h1>
-<form method="POST">
-    {%csrf_token%}
-    <label for="username">Enter username</label>
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+</head>
+<body>
+    
+    <div class="header"><h1>Create an account to acess the website</h1></div>
+    <div class="form-container">
+        <form method="POST">
+            {%csrf_token%}
+    <label for="username">Enter username:</label><br>
     <input type="text" name="username"> <br>
-    <label for="email">Enter Email Address</label>
+    <label for="email">Enter Email Address: </label><br>
     <input type="email" name="email"><br>
-    <label for="password1">Enter password</label>
+    <label for="password1">Enter password: </label> <br>
     <input type="password" name="password1"><br>
-    <label for="password2">Confirm password</label>
+    <label for="password2">Confirm password: </label><br>
     <input type="password" name="password2"><br>
-    <label for="phone">Phone number</label>
+    <label for="phone">Phone number</label><br>
     <input type="text" name="phone"><br>
-    <input type="submit">
+    <div class="submit"><input type="submit"></div>
 </form>
+</div>
+
+</body>
+</html>

@@ -1,31 +1,73 @@
-<style>
-    .tab-space {
-        padding-left: 2em;
-    }
-</style>
-<h1>This is the homepage</h1>
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+</head>
 {%if user.is_authenticated%}
-Welcome {{request.user}}
-<br>
-<p><a href="/tool/customize">Scrap tool here</a>
-    <span class="tab-space">
-        <a href="/logout">Logout</a></span>
-</p>
-{%if user.is_superuser%}
-<p><span><a href="/tool/add_webpage">Add webportal</a></span>
-    <span><a href="/tool/webpage_list">View webportals</a></span>
-</p>
-<p><a href="/tool/news_datahouse">View Scrapped News Database</a></p>
+<body>
+    <div class="index-container">
 
+        <div class="header">
+            <h1>Welcome to the Scrapping Tool</h1>
+        </div>
+<h2>Current user: {{request.user}}</h2>
+<p>
+    <hr>
+    <div class="sub-heading">
+        <h3>Scrapping Tool</h3>
+    </div>
+    <div class="button">
+        <a href="/tool/customize">Scrap tool here</a>
+    </div>
+</p>
+<hr>
+{%if user.is_superuser%}
+<p>
+    <h3>Newsportal services</h3>
+    <div class="button-block">
+
+        <div class="button">
+            <a href="/tool/add_webpage">Add webportal</a>
+        </div>
+        
+        <div class="button">
+            <a href="/tool/webpage_list">View webportals</a>
+        </div>
+    </div>
+</p>
+<hr>
+<p>
+    <h3>Newsheadline Datasets</h3>
+    <div class="button">
+        <a href="/tool/news_datahouse">View Scrapped News Database</a>
+    </div>
+</p>
+<hr>
 {%endif%}
+<div class="button">
+    <a href="/logout">Logout</a>
+</div>
 {%else%}
-<a href="login">Sign in</a>
+<div class="header">
+    <h1>Login first to get access to the system</h1>
+</div>
+<div class="button">
+    <a href="login">Sign in</a>
+</div>
 {%endif%}
 
 {% if messages %}
 <ul>
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
+    {% endfor %}
 </ul>
 {% endif %}
+
+</div>
+</body>
+</html>
