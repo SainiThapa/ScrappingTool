@@ -1,25 +1,36 @@
-
-<style>
-table{
-    border-collapse: collapse;
-}
-th,td{
-    border:2px solid black;
-    padding: 3px;
-}
-</style>
-
-<table>
-    <th>ID</th>
-    <th>news_title</th>
-    <th>news_source</th>
-    <th>Uploaded Date</th>
-    {%for newsheadline in newsheadlines%}
-    <tr>
-        <td>{{newsheadline.id}}</td>
-        <td>{{newsheadline.news_title}}</td>
-        <td><a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a></td>
-        <td>{{newsheadline.news_upload_date}}</td>
-    </tr>
-    {%endfor%}
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://kit.fontawesome.com/785b157135.js" crossorigin="anonymous"></script>
+<body>
+    <style>
+    table{
+        border-collapse: collapse;
+    }
+    th,td{
+        border:2px solid black;
+        padding: 3px;
+    }
+    </style>
+    
+    <table>
+        <th>ID</th>
+        <th>news_title</th>
+        <th>news_source</th>
+        <th>Uploaded Date</th>
+        {%for newsheadline in newsheadlines%}
+        <tr>
+            <td>{{newsheadline.id}}</td>
+            <td>{{newsheadline.news_title}}</td>
+            <td><a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a></td>
+            <td>{{newsheadline.news_upload_date}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    
+</body>
+</html>

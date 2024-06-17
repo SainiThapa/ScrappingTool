@@ -2,6 +2,8 @@ import uuid
 
 from django.db import models
 
+from accounts.models import User
+
 # Create your models here.
 
 class Webportal(models.Model):
@@ -20,3 +22,12 @@ class Newsheadline(models.Model):
 
     def __str__(self):
         return f"{self.news_title} - {self.news_source.page_title}"
+    
+
+class FeaturedNews(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    featured_news=models.OneToOneField(Newsheadline,on_delete=models.CASCADE)
+    featured_date=models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.featured_news} - {self.featured_date}"
