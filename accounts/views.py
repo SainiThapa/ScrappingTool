@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.shortcuts import redirect, render
+from django.contrib.auth.hashers import make_password
+
 
 from accounts.models import BaseUser, SuperUser
 
@@ -24,7 +26,8 @@ def signup(request):
         c_password=request.POST.get("password2")
         phone=request.POST.get("phone")
         if password==c_password and phone:
-            user=User.objects.create(username=username,password=password,email=email,is_superuser=False,is_staff=False)
+            hashed_password = make_password(password)  # Hash the password
+            user=User.objects.create(username=username,password=hashed_password,email=email,is_superuser=False,is_staff=False)
             baseuser=BaseUser.objects.create(user=user,phone=phone)
             baseuser.save()
             return redirect('login')
@@ -39,7 +42,7 @@ def login(request):
         username=request.POST.get("username")
         password=request.POST.get("password")
 
-        user=User.objects.filter(username=username,password=password).first()
+        user=auth.authenticate(request,username=username,password=password)
         if user is not None:
             auth.login(request,user)
             return redirect("/")
@@ -48,6 +51,6 @@ def login(request):
     return render(request, "login.html")
 
 def logout(request):
-    if request.user:
+    if request.user.is_authenticated:
         auth.logout(request)
-        return redirect('/login')
+    return redirect('/login')
