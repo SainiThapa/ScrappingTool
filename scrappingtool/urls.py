@@ -10,4 +10,5 @@ urlpatterns=[
     path('add_webpage',views.add_webpage,name="add_webpage"),
     path('search_database',views.search_database, name="search_database"),
     path('news_datahouse',views.datahouse,name="datahouse"),
+    path('feature/<id>',views.feature,name="feature"),
 ]

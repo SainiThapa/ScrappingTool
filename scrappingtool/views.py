@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect, render
 
 from scrappingtool.db_csv import export_to_csv
-from scrappingtool.models import Newsheadline, Webportal
+from scrappingtool.models import FeaturedNews, Newsheadline, Webportal
 
 from .forms import WebportalForm
 from .scrapping import scrape_news, search_and_display, search_news
@@ -41,7 +41,13 @@ def search_database(request):
         search_query=request.POST.get("search_query")
         newsheadlines=Newsheadline.objects.all()
         matching_newsheadlines=search_news(newsheadlines,search_query)
-        return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query})
+
+        user=request.user
+        featuring_news=FeaturedNews.objects.filter(user=user)
+        featured_news_headlines=[entry.featured_news for entry in featuring_news]
+
+        return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query,
+                                                      'featured_news': featured_news_headlines})
     return redirect("customize")
 
 
@@ -77,3 +83,10 @@ def add_webpage(request):
 def datahouse(request):
     newsheadlines=Newsheadline.objects.all()
     return render(request,"news_list.html",{'newsheadlines':newsheadlines})
+
+@user_passes_test(user_required)
+def feature(request,id):
+    user=request.user
+    feature_news=FeaturedNews.objects.create(user=user,featured_news_id=id)
+    feature_news.save()
+    return redirect(('search_database'))
