@@ -57,7 +57,39 @@ def scrape_news():
             'news_block_class': 'node node-article node-teaser clearfix',
             'title_class': '',
             'post_hour_class': ''
-        }
+        },
+          {
+            'name': 'Gorkhapatra',
+            'url': 'https://gorkhapatraonline.com/categories/national?page={}',
+            'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+            'news_block_class': 'item-content d-flex flex-column align-items-start justify-content-center',
+            'title_class': 'item-title mb-2',
+            'post_hour_class': 'entry-meta meta-color-dark mb-2'
+        },
+          {
+            'name': 'Gorkhapatra',
+            'url': 'https://gorkhapatraonline.com/categories/politics?page={}',
+            'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+            'news_block_class': 'item-content d-flex flex-column align-items-start justify-content-center',
+            'title_class': 'item-title mb-2',
+            'post_hour_class': 'entry-meta meta-color-dark mb-2'
+        },
+          {
+            'name': 'Gorkhapatra',
+            'url': 'https://gorkhapatraonline.com/categories/sports?page={}',
+            'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+            'news_block_class': 'item-content d-flex flex-column align-items-start justify-content-center',
+            'title_class': 'item-title mb-2',
+            'post_hour_class': 'entry-meta meta-color-dark mb-2'
+        },
+           {
+            'name': 'Gorkhapatra',
+            'url': 'https://gorkhapatraonline.com/categories/province?page={}',
+            'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
+            'news_block_class': 'item-content d-flex flex-column align-items-start justify-content-center',
+            'title_class': 'item-title mb-2',
+            'post_hour_class': 'entry-meta meta-color-dark mb-2'
+        },
     ]
 
     for website in websites:
@@ -82,23 +114,23 @@ def scrape_news():
             news_data = soup.find_all('div', class_=website['news_block_class'])
 
             for i in news_data:
+                title_block=['h2','span','div']
                 try:
-                    news_title = i.find('h2', class_=website['title_class'])
-                    if news_title is None:
-                        raise ValueError("Title not found in h2")
+                    for block in title_block: 
+                        news_title = i.find(title_block, class_=website['title_class'])
+                        if news_title is not None:
+                            break
                 except:
-                    try:
-                        news_title = i.find('span', class_=website['title_class'])
-                        if news_title is None:
-                            raise ValueError("Title not found in span")
-                    except:
-                        news_title = i.find('div', class_=website['title_class'])
+                    raise ValueError("News title not found")
+
+                newsblock=['div','span','ul']
                 try:
-                    post_hour = i.find('div', class_=website['post_hour_class'])
-                    if post_hour is None:
-                        raise ValueError("POST Hour not found in div")
+                    for block in newsblock:
+                        post_hour = i.find(block, class_=website['post_hour_class'])
+                        if post_hour is not None:
+                            break
                 except:
-                        post_hour = i.find('span', class_=website['post_hour_class'])
+                        raise ValueError("Post hour not found")
                         
                 if news_title and post_hour:
                     title_text = news_title.text.strip()

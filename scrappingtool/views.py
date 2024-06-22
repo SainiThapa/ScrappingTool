@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect, render
 
-from scrappingtool.db_csv import export_to_csv
 from scrappingtool.models import FeaturedNews, Newsheadline, Webportal
 
 from .forms import WebportalForm
@@ -44,8 +43,11 @@ def search_database(request):
 
         user=request.user
         featuring_news=FeaturedNews.objects.filter(user=user)
-        featured_news_headlines=[entry.featured_news for entry in featuring_news]
+        featured_news_objs=[entry.featured_news for entry in featuring_news]
+        featured_news_headlines=[object.news_title for object in featured_news_objs]
 
+        print(featured_news_headlines)
+        
         return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query,
                                                       'featured_news': featured_news_headlines})
     return redirect("customize")
@@ -87,6 +89,21 @@ def datahouse(request):
 @user_passes_test(user_required)
 def feature(request,id):
     user=request.user
-    feature_news=FeaturedNews.objects.create(user=user,featured_news_id=id)
+    if FeaturedNews.objects.filter(user=user,featured_news_id=id).exists():
+       raise ValueError("Already exists") 
+    else:
+        feature_news=FeaturedNews.objects.create(user=user,featured_news_id=id)
     feature_news.save()
-    return redirect(('search_database'))
+    return redirect('/tool/featured_news')
+
+@user_passes_test(user_required)
+def unfeature(request,id):
+    user=request.user
+    feature_news=FeaturedNews.objects.filter(user=user,featured_news_id=id).first()
+    feature_news.delete()
+    return redirect('/tool/featured_news')
+
+@user_passes_test(user_required)
+def featured_news(request):
+    featured_news=FeaturedNews.objects.filter(user=request.user)
+    return render(request,"featured_news.html",{'featured_news':featured_news})

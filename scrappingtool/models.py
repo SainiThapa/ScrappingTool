@@ -25,8 +25,8 @@ class Newsheadline(models.Model):
     
 
 class FeaturedNews(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    featured_news=models.OneToOneField(Newsheadline,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    featured_news=models.ForeignKey(Newsheadline,on_delete=models.CASCADE)
     featured_date=models.DateField(auto_now_add=True)
 
     def __str__(self):

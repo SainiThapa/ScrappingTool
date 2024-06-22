@@ -15,17 +15,13 @@
         padding: 2px;
         text-align: center;
     }
-#unfeature{
-    color: #ccc; /* Adjust the default color as needed */
-}
-#unfeature:hover{
-    color: red;
-}
-
 #feature{
     color: red; 
 }
 
+#feature:hover{
+    color: #ccc;
+}
 
 </style>
 <body>
@@ -38,24 +34,17 @@
         <th><h1>News Title</h1></th>
         <th><h1>Url source</h1></th>
         <th><h1>Upload Date</h1></th>
-        <th><h3>Feature</h3></th>
+        <th><h3>Featured</h3></th>
 
-        {%for newsheadline in newsheadlines%}
+        {%for news in featured_news%}
     <tr>
-        <td>{{ newsheadline.id }}</td>
-        <td>{{newsheadline.news_title}}</td>
-        <td><a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a></td>
-        <td>{{newsheadline.news_upload_date}}</td>
-        
-        {%if newsheadline.news_title in featured_news%}
+        <td>{{news.featured_news.id }}</td>
+        <td>{{news.featured_news.news_title}}</td>
+        <td><a href="{{news.featured_news.news_source.page_url}}">{{news.featured_news.news_source.page_url}}</a></td>
+        <td>{{news.featured_date}}</td>
         <td>
-            <a href="unfeature/{{newsheadline.id}}"><i id="feature" class="fa-solid fa-heart"></i></a>
+            <a href="/tool/unfeature/{{news.featured_news_id}}"><i id="feature" class="fa-solid fa-heart"></i></a>
         </td>
-        {%else%}
-        <td>
-            <a href="feature/{{newsheadline.id}}"><i id="unfeature" class="fa-regular fa-heart"></i></a>
-        </td>
-        {%endif%}
     </tr>   
     {%endfor%}
 </table>

@@ -11,4 +11,8 @@ urlpatterns=[
     path('search_database',views.search_database, name="search_database"),
     path('news_datahouse',views.datahouse,name="datahouse"),
     path('feature/<id>',views.feature,name="feature"),
+    path('unfeature/<id>',views.unfeature,name="unfeature"),
+
+    path('featured_news/',views.featured_news,name="feature"),
+
 ]
