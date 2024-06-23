@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password
 
 
 from accounts.models import BaseUser, SuperUser
+from scrappingtool.models import Webportal, Newsheadline, FeaturedNews
 
 from .decorators import unauthenticated_user
 
@@ -52,5 +53,11 @@ def login(request):
 
 def logout(request):
     if request.user.is_authenticated:
+        featurednews=FeaturedNews.objects.all()
+        featurednews.delete()
+        newsheadlines=Newsheadline.objects.all()
+        newsheadlines.delete()
+        webportals=Webportal.objects.all()
+        webportals.delete()
         auth.logout(request)
     return redirect('/login')

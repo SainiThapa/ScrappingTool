@@ -45,8 +45,6 @@ def search_database(request):
         featuring_news=FeaturedNews.objects.filter(user=user)
         featured_news_objs=[entry.featured_news for entry in featuring_news]
         featured_news_headlines=[object.news_title for object in featured_news_objs]
-
-        print(featured_news_headlines)
         
         return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query,
                                                       'featured_news': featured_news_headlines})

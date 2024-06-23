@@ -42,13 +42,13 @@ def scrape_news():
             'title_class': 'main-title',
             'post_hour_class': 'time-stamp'
         },
-         {
-            'name': 'Nagrain Municipality',
-            'url': 'https://www.nagrainmun.gov.np/news-notices/?page={}',
+        {
+            'name': 'Hajurko Khabar',
+            'url': 'https://hajurkokhabar.com/category/समाचार?page={}',
             'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
-            'news_block_class': 'node node-article node-teaser clearfix',
-            'title_class': '',
-            'post_hour_class': ''
+            'news_block_class': 'listing__news',
+            'title_class': 'news__title',
+            'post_hour_class': 'time_date'
         },
            {
             'name': 'Modi Municipality',
