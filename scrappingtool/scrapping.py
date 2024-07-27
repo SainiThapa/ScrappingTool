@@ -159,7 +159,8 @@ def scrape_news():
 # Search function
 def search_news(newsheadlines, query):
     query_cleaned = preprocess_nepali_text(query)
-    results = [newsheadline for newsheadline in newsheadlines if query_cleaned in preprocess_nepali_text(newsheadline.news_title)]
+    results = [newsheadline for newsheadline in newsheadlines 
+               if query_cleaned in preprocess_nepali_text(newsheadline.news_title)]
     return results
 
 # Main function to scrape, search, and display results

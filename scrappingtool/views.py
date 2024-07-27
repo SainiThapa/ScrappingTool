@@ -29,7 +29,9 @@ def search(request):
         # websites=website_data(request)
         search_query = request.POST.get("search")
         matching_newsheadlines = search_and_display(search_query)
-        return render(request, "search_result.html", {'newsheadlines':matching_newsheadlines,'search_query': search_query})
+        return render(request, "search_result.html", 
+                      {'newsheadlines':matching_newsheadlines,
+                            'search_query': search_query})
     return redirect("customize")
 
 
