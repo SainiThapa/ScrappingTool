@@ -26,14 +26,26 @@ def signup(request):
         password=request.POST.get("password1")
         c_password=request.POST.get("password2")
         phone=request.POST.get("phone")
-        if password==c_password and phone:
-            hashed_password = make_password(password)  # Hash the password
-            user=User.objects.create(username=username,password=hashed_password,email=email,is_superuser=False,is_staff=False)
-            baseuser=BaseUser.objects.create(user=user,phone=phone)
-            baseuser.save()
+        if password==c_password and phone.isdigit():
+            # hashed_password = make_password(password)  # Hash the password
+            if User.objects.filter(email=email).exists():
+                raise ValueError("User with this email already exists")
+            user, created = User.objects.get_or_create(
+                username=username,
+                defaults={
+                    'password': make_password(password),
+                    'email': email,
+                    'is_superuser': False,
+                    'is_staff': False,
+                }
+            )
+            if created:
+                BaseUser.objects.create(user=user, phone=phone)
+            else:
+                raise ValueError("User with this username already exists")
             return redirect('login')
         else:
-            print("Error")
+            raise ValueError("Passwords donot match/the Phone number must be in numeric digits")
     return render(request,'signup.html')
 
 @unauthenticated_user

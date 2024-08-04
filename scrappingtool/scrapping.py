@@ -86,8 +86,8 @@ def scrape_news():
             'name': 'Gorkhapatra',
             'url': 'https://gorkhapatraonline.com/categories/province?page={}',
             'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'},
-            'news_block_class': 'item-content d-flex flex-column align-items-start justify-content-center',
             'title_class': 'item-title mb-2',
+            'news_block_class': 'item-content d-flex flex-column align-items-start justify-content-center',
             'post_hour_class': 'entry-meta meta-color-dark mb-2'
         },
     ]
