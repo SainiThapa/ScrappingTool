@@ -17,7 +17,8 @@ def customize(request):
     user=request.user
     if(user.is_authenticated):
         webportals=Webportal.objects.all()
-        return render(request,"customize.html",{'webportals':webportals})
+        news=Newsheadline.objects.all()
+        return render(request,"customize.html",{'warehouse':news})
     return render(request,"404.html")
 
 def user_required(user):
