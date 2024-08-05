@@ -1,0 +1,61 @@
+.header h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.button-block{
+    display: flex;
+    margin-block-end: 15px;
+}
+.button{
+    padding: 6px;
+    margin-inline-end: 1%;
+    border-radius: 5px;
+    max-width: fit-content;
+    height: 25px;
+    background-color: rgb(40, 83, 240);
+}
+.button:hover{
+    transition: 0.5s;
+    transform: scale(1.05);
+    background-color: rgb(78, 196, 255);
+}
+
+.button a{
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+}
+.button a:hover{
+    color: black;
+}
+/* Login */
+.form-container{
+    padding: 15px;
+    width: 50%;
+    max-height: fit-content;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.form-container form label{
+    font-size: 24px;
+}
+.form-container form input{
+    font-size:20px;
+    width: 50%;
+    margin: 10px;
+}
+.submit input{
+    width: 50px;
+    border-radius: 5px;
+    background-color: blue;
+    color: white;
+}
+.submit input:hover{
+    transition: 0.5s;
+    transform: scale(1.05);
+    cursor: pointer;
+    background-color: rgb(0, 229, 255);
+    color: black;
+}
+.signup{
+    display: flex;
+    padding-left:1%;
+}
