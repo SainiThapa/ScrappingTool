@@ -18,13 +18,13 @@
     </style>
     
     <table>
-        <th>ID</th>
+        <th>S.No</th>
         <th>news_title</th>
         <th>news_source</th>
         <th>Uploaded Date</th>
         {%for newsheadline in newsheadlines%}
         <tr>
-            <td>{{newsheadline.id}}</td>
+            <td>{{forloop.counter}}</td>
             <td>{{newsheadline.news_title}}</td>
             <td><a href="{{newsheadline.news_source.page_url}}">{{newsheadline.news_source.page_url}}</a></td>
             <td>{{newsheadline.news_upload_date}}</td>

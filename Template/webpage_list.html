@@ -11,14 +11,14 @@
 </style>
 <h1>News Webportal list</h1>
 <table>
-    <th>Page ID</th>
+    <th>S.No</th>
     <th>Webportal</th>
     <th>Webpage source URL</th>
     <th>Action</th>
 
     {%for webportal in webportals%}
     <tr>
-        <td>{{webportal.page_id}}</td>
+        <td>{{forloop.counter}}</td>
         <td>{{webportal.page_title}}</td>
         <td><a href="{{webportal.page_url}}">{{webportal.page_url}}</a></td>
         <form method="post">

@@ -25,6 +25,7 @@ def user_required(user):
     return user.is_active
 
 @user_passes_test(user_required)
+# @app.task
 def search(request):
     if request.method=="POST":
         # websites=website_data(request)
